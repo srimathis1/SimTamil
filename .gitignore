@@ -53,3 +53,7 @@ models/checkpoints/
 *.swo
 .DS_Store
 Thumbs.db
+# Exclude all data, transcripts, and metadata
+*.json
+*.txt
+data/
