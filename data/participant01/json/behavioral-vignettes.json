@@ -1,0 +1,20 @@
+{
+  "name": "Menaka J",
+  "module": "behavioral",
+  "title": "Behavioral Vignettes",
+  "answers": {
+    "BEH-1": 5,
+    "BEH-2": 7,
+    "BEH-3": 5,
+    "BEH-4": 8,
+    "BEH-5": 9
+  },
+  "assignments": {
+    "BEH-1": "treatment",
+    "BEH-2": "treatment",
+    "BEH-3": "control",
+    "BEH-4": "treatment",
+    "BEH-5": "control"
+  },
+  "completedAt": "2026-08-08T13:15:42.119Z"
+}

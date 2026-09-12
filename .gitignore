@@ -1,0 +1,55 @@
+# ==========================================
+# 1. API Keys & Sensitive Secrets
+# ==========================================
+.env
+*.env
+.env.*
+secrets.json
+
+# ==========================================
+# 2. Heavy Media & Audio Datasets
+# ==========================================
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+data/raw_audio/
+data/audio/
+recordings/
+
+# ==========================================
+# 3. Python Cache & Virtual Environments
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ==========================================
+# 4. Hugging Face & Machine Learning Caches
+# ==========================================
+.cache/
+hf_cache/
+*.onnx
+*.bin
+*.safetensors
+models/checkpoints/
+
+# ==========================================
+# 5. IDE, Editors & OS Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

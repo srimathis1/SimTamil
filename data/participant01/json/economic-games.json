@@ -1,0 +1,20 @@
+{
+  "name": "Menaka J",
+  "module": "economic",
+  "title": "Economic Games",
+  "answers": {
+    "ECON-1": "10",
+    "ECON-2": 3,
+    "ECON-3": "350",
+    "ECON-4": 6,
+    "ECON-5": 6
+  },
+  "assignments": {
+    "ECON-1": "treatment",
+    "ECON-2": "treatment",
+    "ECON-3": "treatment",
+    "ECON-4": "treatment",
+    "ECON-5": "treatment"
+  },
+  "completedAt": "2026-08-08T13:17:20.320Z"
+}
