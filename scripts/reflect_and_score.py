@@ -1,9 +1,9 @@
 """
 reflect_and_score.py -- Stage 2: Grounded Reflections in Authentic Tamil.
 
-Combines surveys.txt and audio transcripts in Transcripts/, runs them through
-the 4 expert personas, and saves plain text reflection files in natural Tamil slang
-inside data/Expert_reflection/.
+Combines data/surveys_wave1.txt (Full Wave 1 Q&A) and audio transcripts in
+data/Transcripts/, runs them through the 4 expert personas, and saves plain
+text reflection files in natural Tamil slang inside data/Expert_reflection/.
 
 Usage:
     python scripts/reflect_and_score.py
@@ -12,13 +12,17 @@ Usage:
 import os
 import sys
 from pathlib import Path
-import google.generativeai as genai
 from dotenv import load_dotenv
+import google.generativeai as genai
 
-load_dotenv()
-api_key = os.getenv("API_KEY")
 # Setup API Key
-os.environ["GEMINI_API_KEY"] = api_key
+load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY") or os.getenv("API_KEY")
+
+if not api_key:
+    print("Error: Neither GEMINI_API_KEY nor API_KEY found in .env file")
+    sys.exit(1)
+
 genai.configure(api_key=api_key)
 MODEL_NAME = "gemini-3.6-flash"
 
@@ -27,7 +31,7 @@ REFLECTION_PERSONAS = {
         "label": "உளவியல் நிபுணர் (Psychologist)",
         "system_prompt": (
             "நீங்கள் ஒரு அனுபவமிக்க உளவியல் நிபுணர் (Clinical & Personality Psychologist). "
-            "கொடுக்கப்பட்டுள்ள நேர்காணல் (Tamil Transcripts) மற்றும் கணக்கெடுப்பு பதில்களை (Surveys) ஆழமாக ஆராயுங்கள். "
+            "கொடுக்கப்பட்டுள்ள நேர்காணல் (Tamil Transcripts) மற்றும் Wave 1 முழு கணக்கெடுப்பு பதில்களை (Surveys Wave 1) ஆழமாக ஆராயுங்கள். "
             "முக்கிய விதிமுறை: உங்கள் ஆய்வறிக்கை முழுவதும் இயல்பான, எளிமையான அன்றாட பேச்சுத் தமிழ் நடையில் (Tamil conversational style & natural slang) இருக்க வேண்டும். "
             "ஆடியோவில் அந்த நபர் எப்படி பேசினாரோ அந்த வட்டார வழக்கு, உணர்ச்சி வெளிப்பாடுகள், தயக்கங்களை உள்வாங்கி விளக்குங்கள்.\n\n"
             "நீங்கள் விவரிக்க வேண்டியவை:\n"
@@ -42,7 +46,7 @@ REFLECTION_PERSONAS = {
         "label": "நடத்தை பொருளாதார நிபுணர் (Behavioral Economist)",
         "system_prompt": (
             "நீங்கள் ஒரு நடத்தை பொருளாதார நிபுணர் (Behavioral Economist). "
-            "பங்கேற்பாளரின் நேர்காணல் மற்றும் பொருளாதார முடிவுகளை (Economic Games / Surveys) மதிப்பாய்வு செய்யுங்கள். "
+            "பங்கேற்பாளரின் நேர்காணல் மற்றும் Wave 1 பொருளாதார/நடத்தை முடிவுகளை (Economic Games & Behavioral Vignettes) மதிப்பாய்வு செய்யுங்கள். "
             "முக்கிய விதிமுறை: உங்கள் அறிக்கை முழுவதும் இயல்பான பேச்சுத் தமிழில் (conversational Tamil with authentic tone) எழுதப்பட வேண்டும்.\n\n"
             "நீங்கள் விவரிக்க வேண்டியவை:\n"
             "1. ரிஸ்க் எடுக்கும் குணம் (பணம், தொழில், வாழ்க்கை முடிவுகளில் அவர்கள் காட்டும் துணிவு அல்லது தயக்கம்).\n"
@@ -56,7 +60,7 @@ REFLECTION_PERSONAS = {
         "label": "அரசியல் மற்றும் சமூக ஆய்வாளர் (Political Scientist)",
         "system_prompt": (
             "நீங்கள் ஒரு அரசியல் மற்றும் சமூக அறிவியல் நிபுணர். "
-            "பங்கேற்பாளரின் சமூகப் பார்வை, சமூகம் சார்ந்த கேள்விகளுக்கான பதில்களை ஆராயுங்கள். "
+            "பங்கேற்பாளரின் சமூகப் பார்வை, சமூகம் மற்றும் அரசு சார்ந்த கேள்விகளுக்கான (Wave 1 GSS Survey) பதில்களை ஆராயுங்கள். "
             "முக்கிய விதிமுறை: முழுவதும் எளிய மற்றும் இயல்பான பேச்சுத் தமிழில் (Authentic Tamil slang & phrasing) எழுதவும்.\n\n"
             "நீங்கள் விவரிக்க வேண்டியவை:\n"
             "1. அவர்களின் சமூக பார்வை மற்றும் கருத்தியல் சார்பு.\n"
@@ -70,7 +74,7 @@ REFLECTION_PERSONAS = {
         "label": "மக்கள் தொகை மற்றும் சமூகச் சூழல் ஆய்வாளர் (Demographer)",
         "system_prompt": (
             "நீங்கள் ஒரு சமூகச் சூழல் மற்றும் மக்கள்தொகை ஆய்வாளர் (Demographer). "
-            "பங்கேற்பாளரின் அன்றாட வாழ்க்கை முறை, சூழல் மற்றும் வாழ்வியல் பின்னணியை தொகுக்கவும். "
+            "பங்கேற்பாளரின் அன்றாட வாழ்க்கை முறை, பின்னணி மற்றும் சமூக சூழலை (Wave 1 Demographic Data) தொகுக்கவும். "
             "முக்கிய விதிமுறை: உங்கள் அறிக்கை முழுவதையும் இயல்பான தமிழ் நடையில் வெளிப்படுத்தவும்.\n\n"
             "நீங்கள் விவரிக்க வேண்டியவை:\n"
             "1. தற்போதைய வாழ்க்கை நிலை, குடும்ப சூழல் மற்றும் பொருளாதார பின்னணி.\n"
@@ -84,7 +88,7 @@ REFLECTION_PERSONAS = {
 
 BIG_FIVE_SYSTEM_PROMPT = (
     "நீங்கள் ஒரு ஆளுமை மதிப்பீட்டு நிபுணர் (Personality Psychometrician). "
-    "பங்கேற்பாளரின் ஆடியோ உரையாடல்கள் மற்றும் கணக்கெடுப்புத் தரவுகளை மட்டுமே ஆதாரமாகக் கொண்டு, "
+    "பங்கேற்பாளரின் ஆடியோ உரையாடல்கள் மற்றும் Wave 1 கணக்கெடுப்புத் தரவுகளை மட்டுமே ஆதாரமாகக் கொண்டு, "
     "பிக் ஃபைவ் (OCEAN) ஆளுமைப் பண்புகளுக்கு 1 முதல் 5 வரை மதிப்பெண் (Score) வழங்க வேண்டும். "
     "முக்கிய விதிமுறை: உங்கள் விளக்கம், மேற்கோள்கள் அனைத்தும் இயல்பான பேச்சுத் தமிழில் (Tamil) இருக்க வேண்டும்.\n"
     "ஒவ்வொரு பண்புக்கும்:\n"
@@ -106,25 +110,23 @@ def run_llm(system_prompt: str, prompt: str) -> str:
 def main():
     data_dir = Path("data")
     transcripts_dir = data_dir / "Transcripts"
-    surveys_file = data_dir / "surveys.txt"
-    json_dir = data_dir / "participant01" / "json"
+    w1_surveys_file = data_dir / "surveys_wave1.txt"
     expert_refl_dir = data_dir / "Expert_reflection"
 
     expert_refl_dir.mkdir(parents=True, exist_ok=True)
 
     combined_parts = []
 
-    # 1. Load surveys
-    if surveys_file.exists():
-        combined_parts.append(f"=== QUANTITATIVE SURVEY DATA ===\n{surveys_file.read_text(encoding='utf-8').strip()}")
-    elif json_dir.exists():
-        print(f"Reading survey modules from {json_dir}...")
-        for jf in sorted(json_dir.glob("*.json")):
-            combined_parts.append(f"=== SURVEY MODULE: {jf.name} ===\n{jf.read_text(encoding='utf-8').strip()}")
+    # 1. Load Wave 1 quantitative survey questions and answers
+    if w1_surveys_file.exists():
+        print(f"Loading Wave 1 survey Q&A from {w1_surveys_file}...")
+        w1_content = w1_surveys_file.read_text(encoding="utf-8").strip()
+        combined_parts.append(f"=== WAVE 1 QUANTITATIVE SURVEY DATA ===\n{w1_content}")
     else:
-        print("Warning: Neither data/surveys.txt nor JSON files found.")
+        print(f"Error: {w1_surveys_file} not found. Run scripts/generate_survey_text.py first.")
+        sys.exit(1)
 
-    # 2. Load audio transcripts in order
+    # 2. Load audio transcripts in natural order
     if transcripts_dir.exists():
         transcript_files = sorted(transcripts_dir.glob("audio_*.txt"))
         if not transcript_files:
@@ -138,34 +140,34 @@ def main():
         sys.exit(1)
 
     full_context = "\n\n".join(combined_parts)
-    print(f"Loaded context. Generating authentic Tamil expert reflections using {MODEL_NAME}...\n")
+    print(f"Context loaded ({len(full_context)} chars). Calling {MODEL_NAME}...\n")
 
-    # 3. Generate the 4 Expert Reflections in Tamil
+    # 3. Generate the 4 Expert Reflections in authentic Tamil
     for key, persona in REFLECTION_PERSONAS.items():
         print(f"Generating Tamil reflection: {persona['label']}...")
         reflection_text = run_llm(
             persona["system_prompt"],
-            f"அனைத்து தரவுகளும் (SURVEYS + AUDIO TRANSCRIPTS):\n{full_context}\n\nமேலே உள்ள விதிகளின்படி அசல் பேச்சுத் தமிழில் உங்கள் விரிவான ஆய்வை வழங்கவும்."
+            f"அனைத்து தரவுகளும் (WAVE 1 SURVEYS + AUDIO TRANSCRIPTS):\n{full_context}\n\nமேலே உள்ள விதிகளின்படி அசல் பேச்சுத் தமிழில் உங்கள் விரிவான ஆய்வை வழங்கவும்.",
         )
         file_content = f"நிபுணர் பிரிவு: {persona['label']}\n{'=' * 50}\n\n{reflection_text}\n"
 
         out_file = expert_refl_dir / f"{key}_reflection.txt"
         out_file.write_text(file_content, encoding="utf-8")
-        print(f"  Saved -> {out_file.name}")
+        print(f"  ✓ Saved -> {out_file.name}")
 
-    # 4. Generate Big Five Psychometric Scores in Tamil
+    # 4. Generate Big Five Psychometric Scores
     print("\nGenerating Big Five scores in Tamil...")
     big_five_text = run_llm(
         BIG_FIVE_SYSTEM_PROMPT,
-        f"அனைத்து தரவுகளும் (SURVEYS + AUDIO TRANSCRIPTS):\n{full_context}\n\nபிக் ஃபைவ் ஆளுமை பண்புகளின் மதிப்பெண்களையும் அதற்கான அசல் தமிழ் ஆதாரங்களையும் வழங்கவும்."
+        f"அனைத்து தரவுகளும் (WAVE 1 SURVEYS + AUDIO TRANSCRIPTS):\n{full_context}\n\nபிக் ஃபைவ் ஆளுமை பண்புகளின் மதிப்பெண்களையும் அதற்கான அசல் தமிழ் ஆதாரங்களையும் வழங்கவும்.",
     )
     big_five_content = f"ஆளுமை மதிப்பீடு: Big Five Personality Assessment (Tamil)\n{'=' * 50}\n\n{big_five_text}\n"
 
     big_five_file = expert_refl_dir / "big_five_scores.txt"
     big_five_file.write_text(big_five_content, encoding="utf-8")
-    print(f"  Saved -> {big_five_file.name}\n")
+    print(f"  ✓ Saved -> {big_five_file.name}\n")
 
-    print("Stage 2 Complete! All expert reflections are saved in authentic Tamil in data/Expert_reflection/.")
+    print("Stage 2 Complete! All expert reflections are freshly saved in data/Expert_reflection/.")
 
 
 if __name__ == "__main__":
