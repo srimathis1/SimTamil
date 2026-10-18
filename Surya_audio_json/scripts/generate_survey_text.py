@@ -4,6 +4,7 @@ from pathlib import Path
 # =====================================================================
 # WAVE 1 COMPLETE QUESTION BANK (BFI 44 + GSS 100 + VIG 5 + GAMES 5)
 # =====================================================================
+
 WAVE_1_BFI_ORDER = [
     # Extraversion (8 items)
     ("BFI-EXT-1", "Enjoys being the center of attention in a group"),
@@ -14,6 +15,7 @@ WAVE_1_BFI_ORDER = [
     ("BFI-EXT-6", "Tends to hold back rather than take the lead (R)"),
     ("BFI-EXT-7", "Gets excited about upcoming social events"),
     ("BFI-EXT-8", "Feels most comfortable working alone rather than in a group (R)"),
+
     # Agreeableness (9 items)
     ("BFI-AGR-1", "Goes out of my way to help people, even at personal cost"),
     ("BFI-AGR-2", "Assumes people generally mean well"),
@@ -24,6 +26,7 @@ WAVE_1_BFI_ORDER = [
     ("BFI-AGR-7", "Feels genuine concern for people I don't know well"),
     ("BFI-AGR-8", "Argues just to win, even when I might be wrong (R)"),
     ("BFI-AGR-9", "Tries to see things from other people's point of view"),
+
     # Conscientiousness (9 items)
     ("BFI-CON-1", "Keeps my belongings and workspace well organized"),
     ("BFI-CON-2", "Follows through on commitments, even small ones"),
@@ -34,6 +37,7 @@ WAVE_1_BFI_ORDER = [
     ("BFI-CON-7", "Sets clear goals and works steadily toward them"),
     ("BFI-CON-8", "Forgets appointments or deadlines fairly often (R)"),
     ("BFI-CON-9", "Double-checks my work before calling it finished"),
+
     # Neuroticism (8 items)
     ("BFI-NEU-1", "Worries about things long after they've happened"),
     ("BFI-NEU-2", "Stays calm even when plans fall apart (R)"),
@@ -43,7 +47,8 @@ WAVE_1_BFI_ORDER = [
     ("BFI-NEU-6", "Bounces back quickly from disappointment (R)"),
     ("BFI-NEU-7", "Feels anxious in unfamiliar situations"),
     ("BFI-NEU-8", "Rarely feels overwhelmed by pressure (R)"),
-    # Openness (10 items - using BFI-OPE keys)
+
+    # Openness (10 items)
     ("BFI-OPE-1", "Enjoys discussing abstract ideas or theories"),
     ("BFI-OPE-2", "Seeks out new experiences, even ones that feel risky"),
     ("BFI-OPE-3", "Appreciates art, music, or writing that's unconventional"),
@@ -55,6 +60,7 @@ WAVE_1_BFI_ORDER = [
     ("BFI-OPE-9", "Finds philosophical or scientific questions fascinating"),
     ("BFI-OPE-10", "Feels uneasy around ideas that challenge my usual beliefs (R)"),
 ]
+
 
 WAVE_1_GSS_ORDER = [
     ("GSS-1", "What is your age group?"),
@@ -159,6 +165,7 @@ WAVE_1_GSS_ORDER = [
     ("GSS-100", "Comfort discussing personal problems openly vs keeping strictly private [TN20]"),
 ]
 
+
 WAVE_1_VIGNETTES = [
     ("BEH-1", "Family Obligation vs Personal Opportunity: Likelihood to accept distant job against parental comfort (1-10)"),
     ("BEH-2", "Respecting Elders' Decisions: Comfort in openly disagreeing with father on major life choice (1-10)"),
@@ -166,6 +173,7 @@ WAVE_1_VIGNETTES = [
     ("BEH-4", "Trust Within Family vs Outsiders: Comfort borrowing from formal financial institutions vs informal networks (1-10)"),
     ("BEH-5", "Marriage Decision-Making: Likelihood to prioritize parents' suggested partner over personal choice (1-10)"),
 ]
+
 
 WAVE_1_GAMES = [
     ("ECON-1", "Dictator Game: Amount shared with a distant relative from an unexpected ₹500 windfall (0-500)"),
@@ -179,6 +187,7 @@ WAVE_1_GAMES = [
 def load_json_answers(file_path: Path) -> dict:
     if not file_path.exists():
         return {}
+
     try:
         data = json.loads(file_path.read_text(encoding="utf-8"))
         return data.get("answers", {})
@@ -188,7 +197,8 @@ def load_json_answers(file_path: Path) -> dict:
 
 
 def generate_wave1(data_dir: Path):
-    json_dir = data_dir / "participant01" / "json"
+    # CHANGED ONLY FOR SURYA:
+    json_dir = data_dir / "json"
 
     bfi_answers = load_json_answers(json_dir / "bfi-personality-inventory.json")
     gss_answers = load_json_answers(json_dir / "general-social-survey.json")
@@ -196,7 +206,7 @@ def generate_wave1(data_dir: Path):
     econ_answers = load_json_answers(json_dir / "economic-games.json")
 
     lines = [
-        "=== PARTICIPANT 01: WAVE 1 FULL SURVEY RESPONSES ===",
+        "=== SURYA: WAVE 1 FULL SURVEY RESPONSES ===",
         "Structure: BFI (44 items) + GSS (100 items) + Vignettes (5) + Games (5)\n",
     ]
 
@@ -242,14 +252,29 @@ def generate_wave1(data_dir: Path):
 
     out_file = data_dir / "surveys_wave1.txt"
     out_file.write_text("\n".join(lines), encoding="utf-8")
-    
+
     total_matched = matched_bfi + matched_gss + matched_beh + matched_econ
-    total_items = len(WAVE_1_BFI_ORDER) + len(WAVE_1_GSS_ORDER) + len(WAVE_1_VIGNETTES) + len(WAVE_1_GAMES)
-    print(f"✓ Created: {out_file} (Matched {total_matched}/{total_items}: BFI {matched_bfi}/44, GSS {matched_gss}/100, Vignettes {matched_beh}/5, Games {matched_econ}/5)")
+    total_items = (
+        len(WAVE_1_BFI_ORDER)
+        + len(WAVE_1_GSS_ORDER)
+        + len(WAVE_1_VIGNETTES)
+        + len(WAVE_1_GAMES)
+    )
+
+    print(
+        f"✓ Created: {out_file} "
+        f"(Matched {total_matched}/{total_items}: "
+        f"BFI {matched_bfi}/44, "
+        f"GSS {matched_gss}/100, "
+        f"Vignettes {matched_beh}/5, "
+        f"Games {matched_econ}/5)"
+    )
 
 
 def generate_wave2(data_dir: Path):
-    w2_dir = data_dir / "participant01" / "wave2"
+    # CHANGED ONLY FOR SURYA:
+    w2_dir = data_dir / "wave2"
+
     w2_files = list(w2_dir.glob("*.json"))
 
     if not w2_files:
@@ -258,7 +283,7 @@ def generate_wave2(data_dir: Path):
 
     raw = json.loads(w2_files[0].read_text(encoding="utf-8"))
     sections = raw.get("sections", {})
-    participant_name = raw.get("participant_id", "Participant01")
+    participant_name = raw.get("participant_id", "Surya")
 
     lines = [
         f"=== PARTICIPANT: {participant_name} (WAVE 2 REDUCED INSTRUMENT) ===",

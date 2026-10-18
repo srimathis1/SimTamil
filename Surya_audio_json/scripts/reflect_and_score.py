@@ -109,10 +109,12 @@ def run_llm(system_prompt: str, prompt: str) -> str:
 
 def main():
     data_dir = Path("data")
-    transcripts_dir = data_dir / "Transcripts"
-    w1_surveys_file = data_dir / "surveys_wave1.txt"
-    expert_refl_dir = data_dir / "Expert_reflection"
 
+    transcripts_dir = data_dir / "Transcripts"
+
+    w1_surveys_file = data_dir / "surveys_wave1.txt"
+
+    expert_refl_dir = Path("Expert_reflection")
     expert_refl_dir.mkdir(parents=True, exist_ok=True)
 
     combined_parts = []

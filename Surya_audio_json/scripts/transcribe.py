@@ -112,7 +112,7 @@ def transcribe_file(audio_path: Path, transcripts_dir: Path, lang: str) -> Path:
 
 def main():
     project_root = Path(__file__).resolve().parent.parent
-    default_audio_dir = project_root / "data" / "participant01" / "audio"
+    default_audio_dir = project_root / "data" / "audio"
     default_out_dir = project_root / "data" / "Transcripts"
 
     parser = argparse.ArgumentParser(description=__doc__)
