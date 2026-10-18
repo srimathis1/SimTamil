@@ -1,0 +1,67 @@
+============================================================
+       SimTamil - Participant 01
+       BIG FIVE STATISTICAL EVALUATION
+============================================================
+
+1. HUMAN vs AI BIG FIVE SCORES
+------------------------------------------------------------
+Trait                      Human BFI      AI Score     Abs Error
+----------------------------------------------------------------
+Openness                       4.000         5.000         1.000
+Conscientiousness              3.000         3.000         0.000
+Extraversion                   2.375         2.000         0.375
+Agreeableness                  3.778         4.000         0.222
+Neuroticism                    3.500         4.000         0.500
+
+
+2. STATISTICAL METRICS
+------------------------------------------------------------
+Mean Absolute Error (MAE) : 0.4194
+Mean Squared Error (MSE)  : 0.2880
+Root Mean Squared Error   : 0.5367
+Pearson Correlation (r)   : 0.9793
+
+
+3. METRIC INTERPRETATION
+------------------------------------------------------------
+MAE:
+Average absolute difference between AI and human Big Five scores.
+
+MSE:
+Average squared prediction error. Larger errors receive greater penalty.
+
+RMSE:
+Square root of MSE, expressed on the original 1-5 Big Five score scale.
+
+Pearson Correlation:
+Measures the linear association between the human and AI Big Five profiles.
+
+
+4. FORMULAS
+------------------------------------------------------------
+Absolute Error = |AI Score - Human Score|
+
+MAE = Sum(|AI Score - Human Score|) / Number of Traits
+
+MSE = Sum((AI Score - Human Score)^2) / Number of Traits
+
+RMSE = sqrt(MSE)
+
+Pearson r = Covariance(Human, AI) /
+            (SD_Human × SD_AI)
+
+
+5. EVALUATION METHODOLOGY
+------------------------------------------------------------
+Human ground truth: BFI-44 Wave-1 responses.
+AI prediction: Big Five scores generated from the participant transcript and Wave-1 data.
+Reverse-coded BFI items are scored using 6 - raw response.
+Each Big Five trait is calculated as the mean of its corresponding BFI items.
+All reported evaluation metrics are calculated statistically; no LLM judge is used.
+
+Note: Pearson correlation here is descriptive because this Participant-01 analysis contains only five aggregate trait observations. A larger participant sample or item-level predictions provides a stronger basis for correlation-based inference.
+
+
+============================================================
+                    COMPLETE
+============================================================

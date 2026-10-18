@@ -1,0 +1,5 @@
+﻿expert,candidate_claims,supported_llm_proposed,contradicted_llm_proposed,insufficient_llm_proposed,interpretations_llm_proposed,not_assessed,verifiable_claims_assessed,llm_support_rate_pct,llm_contradiction_rate_pct,llm_insufficient_rate_pct,llm_traceability_pct,human_verified_claims,human_support_rate_pct,human_contradiction_rate_pct
+PSYCHOLOGIST,84,0,0,0,0,84,0,,,,,0,,
+BEHAVIORAL_ECONOMIST,48,0,0,0,0,48,0,,,,,0,,
+POLITICAL_SCIENTIST,37,0,0,0,0,37,0,,,,,0,,
+DEMOGRAPHER,46,0,0,0,0,46,0,,,,,0,,

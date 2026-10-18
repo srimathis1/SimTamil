@@ -1,0 +1,91 @@
+=========================================================================================================
+ MENAKA DIGITAL TWIN: SEMANTIC HARMONIZED EVALUATION REPORT
+=========================================================================================================
+1   | Enjoys being the center of attention in    | 3            | 3            | 3            | True    | True
+2   | Goes out of my way to help people, even    | 4            | 4            | 4            | True    | True
+3   | Follows through on commitments, even sma   | 3            | 5            | 3            | False   | False
+4   | Worries about things long after they've    | 4            | 5            | 4            | False   | False
+5   | Enjoys discussing abstract ideas or theo   | 3            | 4            | 3            | False   | False
+6   | Prefers quiet, low-key settings over liv   | 5            | 5            | 5            | True    | True
+7   | Can be sharp or critical when annoyed (R   | 4            | 5            | 4            | False   | False
+8   | Leaves things until the last minute (R)    | 2            | 2            | 2            | True    | True
+9   | Stays calm even when plans fall apart (R   | 3            | 3            | 3            | True    | True
+10  | Prefers familiar routines over trying ne   | 2            | 3            | 2            | False   | False
+11  | Speaks up easily in conversations, even    | 2            | 2            | 2            | True    | True
+12  | Tries to see things from other people's    | 5            | 4            | 5            | False   | False
+13  | Sets clear goals and works steadily towa   | 4            | 3            | 4            | False   | False
+14  | Overthinks decisions, even small ones      | 3            | 2            | 3            | False   | False
+15  | Comes up with unusual or creative soluti   | 3            | 3            | 3            | True    | True
+16  | Tends to hold back rather than take the    | 3            | 3            | 3            | True    | True
+17  | Tends to be suspicious of others' motive   | 2            | 4            | 2            | False   | False
+18  | Forgets appointments or deadlines fairly   | 4            | 2            | 4            | False   | False
+19  | Rarely feels overwhelmed by pressure (R)   | 2            | 2            | 2            | True    | True
+20  | Feels uneasy around ideas that challenge   | 3            | 4            | 3            | False   | False
+21  | What is your age group?                    | 20-29 Year   | 20-29 Year   | 20-29 Year   | True    | True
+22  | Code respondent's sex                      | Female       | Female       | Female       | True    | True
+23  | Highest level of formal education          | 4 Years of   | Postgradua   | 4 Years of   | False   | False
+24  | Generally speaking, would you say most p   | Depends      | Depends      | Depends      | True    | True
+25  | Do most people try to take advantage of    | Would Try    | Depends      | Would Try    | False   | False
+26  | Do people try to be helpful, or mostly l   | Depends      | Look out f   | Depends      | False   | False
+27  | How much confidence do you have in the s   | A Great De   | Only some    | A Great De   | False   | False
+28  | How much confidence do you have in banks   | A Great De   | A great de   | A Great De   | True    | True
+29  | It's better if the man works outside and   | Strongly D   | Strongly d   | Strongly D   | True    | True
+30  | Same-sex couples should have the right t   | Agree        | Agree        | Agree        | True    | True
+31  | A working mother can have just as warm a   | Strongly D   | Disagree     | Strongly D   | False   | False
+32  | Sometimes necessary to discipline a chil   | Strongly A   | Strongly a   | Strongly A   | True    | True
+33  | How important is being married to you?     | Not at All   | Not at all   | Not at All   | True    | True
+34  | Should divorce be easier or more difficu   | More Diffi   | Easier       | More Diffi   | False   | False
+35  | Do people get ahead by hard work, or luc   | Hard Work    | Hard work    | Hard Work    | False   | False
+36  | How important is it for a child to learn   | 2nd Import   | 2nd most i   | 2nd Import   | False   | False
+37  | Do local courts deal too harshly or not    | Not Harshl   | Not harshl   | Not Harshl   | True    | True
+38  | Favor or oppose the death penalty for mu   | Favor        | Favor        | Favor        | True    | True
+39  | Compared to parents at your age, is your   | Much Bette   | Much bette   | Much Bette   | True    | True
+40  | Will your children's standard of living    | No Childre   | No childre   | No Childre   | True    | True
+41  | Satisfaction with present financial situ   | Not Satisf   | Not satisf   | Not Satisf   | True    | True
+42  | Self-identified social class (lower/work   | Middle Cla   | Middle cla   | Middle Cla   | True    | True
+43  | Likelihood of losing job or being laid o   | Not Likely   | Not too li   | Not Likely   | False   | False
+44  | Ease of finding an equally good job else   | Not Easy     | Not easy a   | Not Easy     | False   | False
+45  | Are you self-employed or work for someon   | Someone El   | Work for s   | Someone El   | False   | False
+46  | How often do you attend religious servic   | Never        | Never        | Never        | True    | True
+47  | About how often do you pray?               | Never        | Never        | Never        | True    | True
+48  | Do you believe there is life after death   | No           | No           | No           | True    | True
+49  | To what extent do you consider yourself    | Not Religi   | Not religi   | Not Religi   | True    | True
+50  | To what extent do you consider yourself    | Not Spirit   | Not spirit   | Not Spirit   | True    | True
+51  | Frequency of being treated with less cou   | A Few Time   | Almost eve   | A Few Time   | False   | False
+52  | Afraid to walk alone at night in local a   | Yes          | No           | Yes          | False   | False
+53  | Do you use a computer?                     | Yes          | Yes          | Yes          | True    | True
+54  | Frequency of internet use in past 12 mon   | Almost All   | Almost all   | Almost All   | True    | True
+55  | Frequency of using internet to search in   | Very Often   | Very often   | Very Often   | True    | True
+56  | Reliability of news on social media        | Somewhat R   | Somewhat r   | Somewhat R   | True    | True
+57  | General happiness these days               | Pretty Hap   | Not too ha   | Pretty Hap   | False   | False
+58  | Is life exciting, routine, or dull?        | Dull         | Routine      | Dull         | False   | False
+59  | General health self-rating                 | Fair         | Fair         | Fair         | True    | True
+60  | Job satisfaction rating                    | A Little D   | Moderately   | A Little D   | False   | False
+61  | Who is mainly involved when a major hous   | Parents or   | Parents or   | Parents or   | True    | True
+62  | Duty to personally take care of aging pa   | Strongly A   | Strongly a   | Strongly A   | True    | True
+63  | Comfort with close family marrying from    | Very Comfo   | Very comfo   | Very Comfo   | True    | True
+64  | Belief that arranged marriages are more    | Strongly D   | Strongly d   | Strongly D   | True    | True
+65  | Who mainly controls day-to-day household   | Parents/In   | Parents/in   | Parents/In   | True    | True
+66  | Frequency of unpaid community/temple con   | Sometimes    | Sometimes    | Sometimes    | True    | True
+67  | Degree of English mixing (code-switching   | Mostly Tam   | Mostly Tam   | Mostly Tam   | True    | True
+68  | Preference between joint family and nucl   | Strongly P   | Strongly p   | Strongly P   | True    | True
+69  | Family pressure to pursue a specific res   | A Great De   | A great de   | A Great De   | False   | False
+70  | Younger members should follow elders' de   | Strongly D   | Strongly d   | Strongly D   | True    | True
+71  | Family Obligation vs Personal Opportunit   | 5            | 10 / 10      | 5            | False   | False
+72  | Respecting Elders' Decisions: Comfort in   | 7            | 10 / 10      | 7            | False   | False
+73  | Community Reputation & Judgment: Impact    | 5            | 6 / 10       | 5            | False   | False
+74  | Trust Within Family vs Outsiders: Comfor   | 8            | 2 / 10       | 8            | False   | False
+75  | Marriage Decision-Making: Likelihood to    | 9            | 7 / 10       | 9            | False   | False
+76  | Dictator Game: Amount shared with a dist   | 10           | 100          | 10           | False   | False
+77  | Trust Game: Likelihood of lending ₹2,000   | 3            | 3            | 3            | True    | True
+78  | Fairness Game: Amount given to a struggl   | 350          | 10           | 350          | False   | False
+79  | Reputation & Default: Impact on lender's   | 6            | 7            | 6            | False   | False
+80  | Joint Family Financial Decisions: Likeli   | 6            | 8            | 6            | False   | False
+
+##################################################
+Human Test-Retest Agreement : 53.75%
+Agent Predictive Accuracy   : 53.75%
+Normalized Accuracy (NPA)   : 1.000
+Human Retest MAE            : 14.500
+Agent Prediction MAE        : 14.500
+##################################################

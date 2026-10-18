@@ -1,0 +1,87 @@
+============================================================================
+SIMTAMIL: AUTOMATED REFLECTION EVALUATION
+============================================================================
+Model: gemini-3.6-flash
+Existing reflections only. No regeneration.
+Reference data: Wave 1 survey and transcripts.
+Wave 2 loaded: NO
+One API request per expert under normal operation.
+
+METHOD
+Python calculates descriptive statistics from proposed labels.
+LLM classifications are preliminary and require human review.
+Candidate sentences may contain multiple claims.
+Lexical retrieval does not prove factual support.
+
+FORMULAS
+Support = supported / (supported + contradicted + insufficient) * 100
+Contradiction = contradicted / same denominator * 100
+Insufficient = insufficient / same denominator * 100
+Traceability = claims with source and excerpt / denominator * 100
+
+N/A means no eligible claims were assessed.
+Human-verified metrics remain N/A until labels are audited.
+
+----------------------------------------------------------------------------
+EXPERT: PSYCHOLOGIST
+Candidate sentences: 84
+Assessed factual claims: 0
+Supported (LLM proposed): 0
+Contradicted (LLM proposed): 0
+Insufficient evidence: 0
+Interpretations: 0
+Not assessed: 84
+Support rate: N/A
+Contradiction rate: N/A
+Insufficient-evidence rate: N/A
+Traceability: N/A
+Human-verified claims: 0
+Human-verified support rate: N/A
+
+----------------------------------------------------------------------------
+EXPERT: BEHAVIORAL_ECONOMIST
+Candidate sentences: 48
+Assessed factual claims: 0
+Supported (LLM proposed): 0
+Contradicted (LLM proposed): 0
+Insufficient evidence: 0
+Interpretations: 0
+Not assessed: 48
+Support rate: N/A
+Contradiction rate: N/A
+Insufficient-evidence rate: N/A
+Traceability: N/A
+Human-verified claims: 0
+Human-verified support rate: N/A
+
+----------------------------------------------------------------------------
+EXPERT: POLITICAL_SCIENTIST
+Candidate sentences: 37
+Assessed factual claims: 0
+Supported (LLM proposed): 0
+Contradicted (LLM proposed): 0
+Insufficient evidence: 0
+Interpretations: 0
+Not assessed: 37
+Support rate: N/A
+Contradiction rate: N/A
+Insufficient-evidence rate: N/A
+Traceability: N/A
+Human-verified claims: 0
+Human-verified support rate: N/A
+
+----------------------------------------------------------------------------
+EXPERT: DEMOGRAPHER
+Candidate sentences: 46
+Assessed factual claims: 0
+Supported (LLM proposed): 0
+Contradicted (LLM proposed): 0
+Insufficient evidence: 0
+Interpretations: 0
+Not assessed: 46
+Support rate: N/A
+Contradiction rate: N/A
+Insufficient-evidence rate: N/A
+Traceability: N/A
+Human-verified claims: 0
+Human-verified support rate: N/A

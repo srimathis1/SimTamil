@@ -1,0 +1,15 @@
+{
+  "metrics": {
+    "profundity": 0.92,
+    "comprehensiveness": 0.94,
+    "professionalism": 0.95,
+    "constructive_alignment": 0.91,
+    "overall_justification_score": 0.93
+  },
+  "expert_diagnostics": {
+    "psychologist": "Deconstructs Menaka's profile using the Big Five framework, highlighting high Openness and Agreeableness alongside strong pragmatic rationality over emotionality. Uncovers an internal conflict between her drive for high-paying AI corporate roles to support her family and her latent passion for social service.",
+    "behavioral_economist": "Frames Menaka as a 'Rational Utilitarian' who engages in System 2 logical reasoning and calculated risk-taking. Demonstrates how she balances present consumption with future savings, viewing money primarily as a means for individual autonomy and family security.",
+    "political_scientist": "Identifies her progressive, anti-patriarchal, and secular orientation, rejecting traditional caste norms and superstition. Details her strong institutional trust in scientific and financial sectors contrasted with high skepticism toward religious bodies and traditional media.",
+    "demographer": "Traces her demographic trajectory from a rural background in Kirimedu to an urban technical education at MIT Chennai. Highlights the structural socio-economic responsibilities she carries for her family while negotiating modern individualistic values."
+  },
+}
