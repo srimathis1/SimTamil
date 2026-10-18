@@ -33,7 +33,7 @@ env/
 ENV/
 env.bak/
 venv.bak/
-
+data.zip
 # ==========================================
 # 4. Hugging Face & Machine Learning Caches
 # ==========================================
