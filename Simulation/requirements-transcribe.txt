@@ -1,0 +1,11 @@
+# Tamil speech-to-text (AI4Bharat IndicConformer). Install inside the venv created by setup_transcribe.
+# Python 3.10 - 3.12 recommended. Needs ~4 GB free RAM and ~3 GB disk for the model (downloaded on first run).
+torch>=2.1
+torchaudio>=2.1
+transformers>=4.40,<5
+onnx
+onnxruntime        # CPU. For an NVIDIA GPU, replace with: onnxruntime-gpu
+soundfile
+numpy
+accelerate
+requests           # used when audio is fetched from Supabase

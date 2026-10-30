@@ -1,0 +1,1282 @@
+{
+  "schema_version": "1.0",
+  "description": "Question bank for the GSS-style survey and BFI questionnaire. Contains questions and answer options only; no participant responses.",
+  "gss": [
+    {
+      "question_key": "gss_q01_trust",
+      "order_index": 1,
+      "section": "B. Trust and confidence",
+      "question_type": "single_choice",
+      "question": "In general, do you think most people can be trusted, or that you should be careful in dealing with people?",
+      "options": [
+        "Most people can be trusted",
+        "Should be careful",
+        "It depends"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q02_fair",
+      "order_index": 2,
+      "section": "B. Trust and confidence",
+      "question_type": "single_choice",
+      "question": "If they got a chance, do you think most people would try to take advantage of you, or would they try to be fair?",
+      "options": [
+        "Would take advantage",
+        "Would try to be fair",
+        "It depends"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q03_helpful",
+      "order_index": 3,
+      "section": "B. Trust and confidence",
+      "question_type": "single_choice",
+      "question": "Would you say that most of the time people try to be helpful, or that they mostly look out for themselves?",
+      "options": [
+        "Try to be helpful",
+        "Look out for themselves",
+        "It depends"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q04_conpress",
+      "order_index": 4,
+      "section": "B. Trust and confidence",
+      "question_type": "single_choice",
+      "question": "How much confidence do you have in the media (newspapers and TV news)?",
+      "options": [
+        "A great deal",
+        "Only some",
+        "Hardly any"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q05_confinan",
+      "order_index": 5,
+      "section": "B. Trust and confidence",
+      "question_type": "single_choice",
+      "question": "How much confidence do you have in banks and financial institutions?",
+      "options": [
+        "A great deal",
+        "Only some",
+        "Hardly any"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q06_conclerg",
+      "order_index": 6,
+      "section": "B. Trust and confidence",
+      "question_type": "single_choice",
+      "question": "How much confidence do you have in religious institutions (temples, mosques, churches)?",
+      "options": [
+        "A great deal",
+        "Only some",
+        "Hardly any"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q07_family16",
+      "order_index": 7,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "When you were around 16 years old, who were you living with?",
+      "options": [
+        "Both parents",
+        "Mother only",
+        "Father only",
+        "Grandparents or other relatives",
+        "Someone else"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q08_fefam",
+      "order_index": 8,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "It is better for everyone if the man earns money outside the home and the woman takes care of the home and family.",
+      "options": [
+        "Strongly agree",
+        "Agree",
+        "Neutral",
+        "Disagree",
+        "Strongly disagree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q09_impmar",
+      "order_index": 9,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "How important is being married to you personally?",
+      "options": [
+        "One of the most important",
+        "Very important",
+        "Somewhat important",
+        "Not too important",
+        "Not at all important"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q10_divlaw",
+      "order_index": 10,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "Should it be easier or harder to get a divorce than it is now?",
+      "options": [
+        "Easier",
+        "Harder",
+        "Keep it as it is"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q11_premarsx",
+      "order_index": 11,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "If a man and a woman have sexual relations before marriage, do you think it is wrong?",
+      "options": [
+        "Always wrong",
+        "Almost always wrong",
+        "Wrong only sometimes",
+        "Not wrong at all",
+        "Prefer not to answer"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q12_obey",
+      "order_index": 12,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "How important is it for a child to learn to obey parents and elders?",
+      "options": [
+        "One of the most important",
+        "Very important",
+        "Somewhat important",
+        "Not too important",
+        "Not at all important"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q13_thinkself",
+      "order_index": 13,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "How important is it for a child to learn to think for themselves?",
+      "options": [
+        "One of the most important",
+        "Very important",
+        "Somewhat important",
+        "Not too important",
+        "Not at all important"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q14_getahead",
+      "order_index": 14,
+      "section": "C. Family, gender and social values",
+      "question_type": "single_choice",
+      "question": "Some people say that hard work is the main way to get ahead in life, while others say that luck or help from other people matters more. Which do you think is more important?",
+      "options": [
+        "Hard work",
+        "Both equally",
+        "Luck or help from others"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q15_satjob",
+      "order_index": 15,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "(Ask only if currently working.) On the whole, how satisfied are you with the work you do?",
+      "options": [
+        "Very satisfied",
+        "Moderately satisfied",
+        "A little dissatisfied",
+        "Very dissatisfied"
+      ],
+      "display_condition": {
+        "field": "work_status",
+        "in": [
+          "Employed full-time",
+          "Employed part-time",
+          "Self-employed"
+        ]
+      }
+    },
+    {
+      "question_key": "gss_q16_richwork",
+      "order_index": 16,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "(Ask only if currently working.) If you had enough money to live comfortably for the rest of your life, would you continue to work or stop working?",
+      "options": [
+        "Continue working",
+        "Stop working"
+      ],
+      "display_condition": {
+        "field": "work_status",
+        "in": [
+          "Employed full-time",
+          "Employed part-time",
+          "Self-employed"
+        ]
+      }
+    },
+    {
+      "question_key": "gss_q17_parsol",
+      "order_index": 17,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "Compared to your parents when they were your age, is your standard of living now better, worse, or about the same?",
+      "options": [
+        "Much better",
+        "Somewhat better",
+        "About the same",
+        "Somewhat worse",
+        "Much worse"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q18_satfin",
+      "order_index": 18,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "How satisfied are you with your family's present financial situation?",
+      "options": [
+        "Very satisfied",
+        "Somewhat satisfied",
+        "Not at all satisfied"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q19_local_worry",
+      "order_index": 19,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "How often do you worry about having enough money for daily expenses or for an emergency?",
+      "options": [
+        "Almost every day",
+        "A few times a week",
+        "A few times a month",
+        "Rarely",
+        "Never"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q20_class",
+      "order_index": 20,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "Which social class would you say you belong to?",
+      "options": [
+        "Lower class",
+        "Lower-middle class",
+        "Middle class",
+        "Upper-middle or upper class"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q21_disrspct",
+      "order_index": 21,
+      "section": "D. Work, money and class",
+      "question_type": "single_choice",
+      "question": "How often are you treated with less respect than other people?",
+      "options": [
+        "Almost every day",
+        "At least once a week",
+        "A few times a month",
+        "A few times a year",
+        "Never"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q22_attend",
+      "order_index": 22,
+      "section": "E. Religion and spirituality",
+      "question_type": "single_choice",
+      "question": "How often do you go to a temple, mosque, church or other place of worship?",
+      "options": [
+        "Never",
+        "A few times a year",
+        "About once a month",
+        "About once a week",
+        "Almost every day"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q23_pray",
+      "order_index": 23,
+      "section": "E. Religion and spirituality",
+      "question_type": "single_choice",
+      "question": "How often do you pray or perform worship at home or elsewhere?",
+      "options": [
+        "Several times a day",
+        "Once a day",
+        "Several times a week",
+        "Less often",
+        "Never"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q24_postlife",
+      "order_index": 24,
+      "section": "E. Religion and spirituality",
+      "question_type": "single_choice",
+      "question": "Do you believe there is life after death (including rebirth)?",
+      "options": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q25_god",
+      "order_index": 25,
+      "section": "E. Religion and spirituality",
+      "question_type": "single_choice",
+      "question": "Which statement is closest to your belief about God?",
+      "options": [
+        "I don''t believe in God",
+        "I don''t know, and there is no way to find out",
+        "I believe in a higher power",
+        "I believe in God, with some doubts",
+        "I believe in God, with no doubts"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q26_relpersn",
+      "order_index": 26,
+      "section": "E. Religion and spirituality",
+      "question_type": "single_choice",
+      "question": "How religious do you consider yourself to be?",
+      "options": [
+        "Very religious",
+        "Moderately religious",
+        "Slightly religious",
+        "Not religious at all"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q27_local",
+      "order_index": 27,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "How closely do you follow political news?",
+      "options": [
+        "Very closely",
+        "Somewhat closely",
+        "Not very closely",
+        "Not at all"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q28_local",
+      "order_index": 28,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "How much confidence do you have in the Tamil Nadu state government?",
+      "options": [
+        "A great deal",
+        "Only some",
+        "Hardly any"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q29_local",
+      "order_index": 29,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "How much confidence do you have in the central (Union) government?",
+      "options": [
+        "A great deal",
+        "Only some",
+        "Hardly any"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q30_local",
+      "order_index": 30,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "On matters such as education, language and taxes, who should have more power to decide?",
+      "options": [
+        "State governments much more",
+        "State governments somewhat more",
+        "Both equally",
+        "Central government somewhat more",
+        "Central government much more"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q31_local",
+      "order_index": 31,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "Do you support the current system of caste-based reservations in education and government jobs?",
+      "options": [
+        "Strongly support",
+        "Support",
+        "Neutral",
+        "Oppose",
+        "Strongly oppose",
+        "Prefer not to answer"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q32_local",
+      "order_index": 32,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "Government welfare schemes such as free rations, pensions and subsidies should be continued or expanded.",
+      "options": [
+        "Strongly agree",
+        "Agree",
+        "Neutral",
+        "Disagree",
+        "Strongly disagree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q33_local",
+      "order_index": 33,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "How important is your Tamil identity to who you are?",
+      "options": [
+        "One of the most important",
+        "Very important",
+        "Somewhat important",
+        "Not too important",
+        "Not at all important"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q34_local",
+      "order_index": 34,
+      "section": "F. Politics, government and identity (Tamil Nadu context)",
+      "question_type": "single_choice",
+      "question": "How important is your caste or community identity to who you are?",
+      "options": [
+        "One of the most important",
+        "Very important",
+        "Somewhat important",
+        "Not too important",
+        "Not at all important",
+        "Prefer not to answer"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q35_intrnetuse",
+      "order_index": 35,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "How often did you use the internet in the past 12 months?",
+      "options": [
+        "Almost all the time",
+        "Several times a day",
+        "Once a day",
+        "A few times a week",
+        "Rarely",
+        "Never"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q36_smnews",
+      "order_index": 36,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "How reliable is the news you see on social media?",
+      "options": [
+        "Very unreliable",
+        "Somewhat unreliable",
+        "Somewhat reliable",
+        "Very reliable"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q37_fear",
+      "order_index": 37,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "Is there any area within 1 km of your home where you would be afraid to walk alone at night?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q38_happy",
+      "order_index": 38,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "Taking everything together, how would you say things are these days?",
+      "options": [
+        "Very happy",
+        "Pretty happy",
+        "Not too happy"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q39_health",
+      "order_index": 39,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "In general, would you say your health is excellent, good, fair, or poor?",
+      "options": [
+        "Excellent",
+        "Good",
+        "Fair",
+        "Poor"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q40_socrel",
+      "order_index": 40,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "How often do you spend time with relatives, either visiting them or hosting them?",
+      "options": [
+        "Almost daily",
+        "Once or twice a week",
+        "A few times a month",
+        "A few times a year",
+        "Never"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q41_local",
+      "order_index": 41,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "Thinking about the next 5 years, do you think your family's standard of living will get better, worse, or stay about the same?",
+      "options": [
+        "Much better",
+        "Somewhat better",
+        "About the same",
+        "Somewhat worse",
+        "Much worse"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "gss_q42_local",
+      "order_index": 42,
+      "section": "G. Technology, community, safety and wellbeing",
+      "question_type": "single_choice",
+      "question": "How often do you give your time, labor or money to a community activity (such as a temple festival, street function or local welfare work) without expecting anything in return?",
+      "options": [
+        "Very often",
+        "Fairly often",
+        "Sometimes",
+        "Rarely",
+        "Never"
+      ],
+      "display_condition": null
+    }
+  ],
+  "bfi": [
+    {
+      "question_key": "bfi_e1",
+      "order_index": 1,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Enjoys being the center of attention in a group",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e2",
+      "order_index": 2,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Feels energized after spending time around lots of people",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e3",
+      "order_index": 3,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Speaks up easily in conversations, even with strangers",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e4_r",
+      "order_index": 4,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Prefers quiet, low-key settings over lively gatherings",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e5",
+      "order_index": 5,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Finds it easy to introduce myself to new people",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e6_r",
+      "order_index": 6,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Tends to hold back rather than take the lead",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e7",
+      "order_index": 7,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Gets excited about upcoming social events",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_e8_r",
+      "order_index": 8,
+      "section": "Extraversion",
+      "question_type": "likert5",
+      "question": "Feels most comfortable working alone rather than in a group",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a1",
+      "order_index": 9,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Goes out of my way to help people, even at personal cost",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a2",
+      "order_index": 10,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Assumes people generally mean well",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a3",
+      "order_index": 11,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Finds it easy to forgive others after a conflict",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a4_r",
+      "order_index": 12,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Can be sharp or critical when annoyed",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a5",
+      "order_index": 13,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Enjoys cooperating with others rather than competing",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a6_r",
+      "order_index": 14,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Tends to be suspicious of others' motives",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a7",
+      "order_index": 15,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Feels genuine concern for people I don't know well",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a8_r",
+      "order_index": 16,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Argues just to win, even when I might be wrong",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_a9",
+      "order_index": 17,
+      "section": "Agreeableness",
+      "question_type": "likert5",
+      "question": "Tries to see things from other people's point of view",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c1",
+      "order_index": 18,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Keeps my belongings and workspace well organized",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c2",
+      "order_index": 19,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Follows through on commitments, even small ones",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c3",
+      "order_index": 20,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Plans tasks carefully before starting them",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c4_r",
+      "order_index": 21,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Leaves things until the last minute",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c5",
+      "order_index": 22,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Pays close attention to details in my work",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c6_r",
+      "order_index": 23,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Loses focus easily and jumps between tasks",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c7",
+      "order_index": 24,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Sets clear goals and works steadily toward them",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c8_r",
+      "order_index": 25,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Forgets appointments or deadlines fairly often",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_c9",
+      "order_index": 26,
+      "section": "Conscientiousness",
+      "question_type": "likert5",
+      "question": "Double-checks my work before calling it finished",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n1",
+      "order_index": 27,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Worries about things long after they've happened",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n2_r",
+      "order_index": 28,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Stays calm even when plans fall apart",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n3",
+      "order_index": 29,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Gets stressed easily by everyday hassles",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n4_r",
+      "order_index": 30,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Feels emotionally steady most of the time",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n5",
+      "order_index": 31,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Overthinks decisions, even small ones",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n6_r",
+      "order_index": 32,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Bounces back quickly from disappointment",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n7",
+      "order_index": 33,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Feels anxious in unfamiliar situations",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_n8_r",
+      "order_index": 34,
+      "section": "Neuroticism",
+      "question_type": "likert5",
+      "question": "Rarely feels overwhelmed by pressure",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o1",
+      "order_index": 35,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Enjoys discussing abstract ideas or theories",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o2",
+      "order_index": 36,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Seeks out new experiences, even ones that feel risky",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o3",
+      "order_index": 37,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Appreciates art, music, or writing that's unconventional",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o4_r",
+      "order_index": 38,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Prefers familiar routines over trying new things",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o5",
+      "order_index": 39,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Gets curious about topics I know nothing about",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o6",
+      "order_index": 40,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Comes up with unusual or creative solutions to problems",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o7_r",
+      "order_index": 41,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Sticks to tried-and-true methods rather than experimenting",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o8",
+      "order_index": 42,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Enjoys imagining possibilities that don't yet exist",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o9",
+      "order_index": 43,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Finds philosophical or scientific questions fascinating",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    },
+    {
+      "question_key": "bfi_o10_r",
+      "order_index": 44,
+      "section": "Openness",
+      "question_type": "likert5",
+      "question": "Feels uneasy around ideas that challenge my usual beliefs",
+      "options": [
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+      ],
+      "display_condition": null
+    }
+  ],
+  "counts": {
+    "gss_questions": 42,
+    "bfi_questions": 44,
+    "total_questions": 86
+  }
+}

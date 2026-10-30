@@ -1,0 +1,23 @@
+*********For extract
+    python export_participant.py raja_23
+
+********For transcribe
+python transcribe_user.py raja_23
+
+
+******For expert_sur_int
+# survey + interview (default)
+python expert_sur_int.py Mouneeswaran --source both
+
+# transcript only
+python expert_sur_int.py Mouneeswaran --source interview
+
+# survey (all.json) only
+python expert_sur_int.py Mouneeswaran --source survey
+
+English (--lang en)
+
+
+
+
+
