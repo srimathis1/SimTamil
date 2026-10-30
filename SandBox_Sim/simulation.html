@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tamil AI நகர் உலகம் — AI Simulation</title>
+<meta name="description" content="An AI-powered Tamil city simulation with intelligent NPC agents that respond in Tamil."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0d1117;
+    --panel:#161b22;
+    --panel2:#1c2128;
+    --border:#30363d;
+    --accent:#58a6ff;
+    --accent2:#3fb950;
+    --accent3:#d29922;
+    --accent4:#f85149;
+    --text:#e6edf3;
+    --text2:#8b949e;
+    --player:#00e5ff;
+    --announce:#ff9800;
+    --shadow:rgba(0,0,0,0.7);
+  }
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Inter',sans-serif;color:var(--text)}
+  #app{display:flex;width:100vw;height:100vh;position:relative}
+  #sim-canvas{position:absolute;top:0;left:0;width:100%;height:100%;cursor:default;}
+  
+  /* TOPBAR */
+  #topbar{
+    position:absolute;top:0;left:0;right:0;height:52px;
+    background:linear-gradient(180deg,rgba(13,17,23,0.97) 0%,rgba(13,17,23,0.8) 100%);
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:12px;padding:0 16px;
+    z-index:50;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  }
+  .logo{font-weight:700;font-size:14px;letter-spacing:0.5px;color:var(--accent);white-space:nowrap}
+  .logo span{color:var(--text2);font-weight:400}
+  #sim-time{font-size:12px;color:var(--text2)}
+  .spacer{flex:1}
+  #api-key-wrap{display:flex;align-items:center;gap:8px}
+  #api-key-input{
+    background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    padding:5px 10px;border-radius:6px;font-size:12px;width:230px;outline:none;
+    transition:border 0.2s;
+  }
+  #api-key-input:focus{border-color:var(--accent)}
+  #api-key-input::placeholder{color:var(--text2)}
+  .btn-sm{
+    background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;
+    transition:all 0.15s;white-space:nowrap;
+  }
+  .btn-sm:hover{background:var(--panel);border-color:var(--accent);color:var(--accent)}
+  .status-dot{width:8px;height:8px;border-radius:50%;background:#555;flex-shrink:0}
+  .status-dot.green{background:var(--accent2);box-shadow:0 0 6px var(--accent2)}
+  .status-dot.red{background:var(--accent4)}
+
+  /* CHAT PANEL */
+  #chat-panel{
+    position:absolute;bottom:0;right:0;width:330px;
+    background:rgba(13,17,23,0.95);border-left:1px solid var(--border);border-top:1px solid var(--border);
+    display:flex;flex-direction:column;z-index:40;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:12px 0 0 0;
+    max-height:calc(100vh - 52px);
+  }
+  #chat-header{
+    padding:10px 14px;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:8px;flex-shrink:0;
+  }
+  #chat-header h3{font-size:13px;font-weight:600;color:var(--text);flex:1;font-family:'Noto Sans Tamil',sans-serif}
+  #chat-target-badge{
+    font-size:11px;padding:2px 8px;border-radius:20px;
+    background:rgba(88,166,255,0.15);border:1px solid rgba(88,166,255,0.3);
+    color:var(--accent);font-family:'Noto Sans Tamil',sans-serif;white-space:nowrap;max-width:120px;
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  #chat-log{
+    flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:200px;
+  }
+  #chat-log::-webkit-scrollbar{width:4px}
+  #chat-log::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .chat-msg{
+    padding:8px 10px;border-radius:8px;font-size:12px;line-height:1.55;
+    animation:fadeIn 0.25s ease;font-family:'Noto Sans Tamil',sans-serif;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .chat-msg.player{background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.2);align-self:flex-end;max-width:85%}
+  .chat-msg.npc{background:var(--panel2);border:1px solid var(--border);align-self:flex-start;max-width:85%}
+  .chat-msg.announce{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);align-self:center;max-width:95%;text-align:center}
+  .chat-msg.system{background:rgba(63,185,80,0.08);border:1px solid rgba(63,185,80,0.2);align-self:center;max-width:95%;font-size:11px;color:var(--text2);text-align:center}
+  .msg-sender{font-weight:600;font-size:11px;margin-bottom:3px;color:var(--accent2)}
+  .msg-sender.you{color:var(--accent)}
+  .msg-sender.ann{color:var(--announce)}
+  .thinking{color:var(--text2);font-style:italic;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+
+  /* INPUT */
+  #input-area{padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0}
+  #mode-tabs{display:flex;gap:4px;margin-bottom:8px}
+  .mode-tab{
+    flex:1;padding:5px;border-radius:5px;font-size:11px;cursor:pointer;text-align:center;
+    background:var(--panel2);border:1px solid var(--border);color:var(--text2);
+    transition:all 0.15s;user-select:none;
+  }
+  .mode-tab.active{background:rgba(88,166,255,0.12);border-color:rgba(88,166,255,0.4);color:var(--accent)}
+  .mode-tab.atab.active{background:rgba(255,152,0,0.12);border-color:rgba(255,152,0,0.4);color:var(--announce)}
+  #msg-row{display:flex;gap:6px}
+  #msg-input{
+    flex:1;background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    padding:7px 10px;border-radius:7px;font-size:12px;outline:none;
+    transition:border 0.2s;font-family:'Noto Sans Tamil',sans-serif;
+  }
+  #msg-input:focus{border-color:var(--accent)}
+  #msg-input::placeholder{color:var(--text2);font-size:11px}
+  #send-btn{
+    background:var(--accent);color:#0d1117;border:none;padding:7px 14px;
+    border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;
+    transition:all 0.15s;white-space:nowrap;min-width:60px;
+  }
+  #send-btn:hover{background:#79b8ff}
+  #send-btn.ann{background:var(--announce);color:#000}
+  #send-btn.ann:hover{background:#ffb74d}
+
+  /* AGENTS PANEL */
+  #agents-panel{
+    position:absolute;top:52px;left:0;width:196px;
+    background:rgba(13,17,23,0.93);border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+    z-index:40;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border-radius:0 0 12px 0;overflow:hidden;
+    display:flex;flex-direction:column;max-height:380px;
+  }
+  #agents-header{padding:8px 12px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.3px;flex-shrink:0}
+  #agent-list{overflow-y:auto;flex:1}
+  #agent-list::-webkit-scrollbar{width:3px}
+  #agent-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .agent-item{
+    padding:7px 10px;border-bottom:1px solid rgba(48,54,61,0.5);cursor:pointer;
+    display:flex;align-items:center;gap:8px;transition:background 0.15s;
+  }
+  .agent-item:hover{background:var(--panel2)}
+  .agent-item.selected{background:rgba(88,166,255,0.1);border-left:2px solid var(--accent)}
+  .agent-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .agent-name{font-size:11px;font-weight:600;font-family:'Noto Sans Tamil',sans-serif}
+  .agent-role{font-size:10px;color:var(--text2);font-family:'Noto Sans Tamil',sans-serif}
+  .agent-sdot{width:6px;height:6px;border-radius:50%;background:var(--accent2);margin-left:auto;flex-shrink:0;transition:background 0.3s}
+
+  /* LOG */
+  #log-panel{
+    position:absolute;bottom:0;left:0;width:196px;
+    background:rgba(13,17,23,0.93);border-top:1px solid var(--border);border-right:1px solid var(--border);
+    z-index:40;backdrop-filter:blur(8px);border-radius:0 12px 0 0;
+    max-height:130px;display:flex;flex-direction:column;
+  }
+  #log-header{padding:6px 12px;border-bottom:1px solid var(--border);font-size:10px;font-weight:600;color:var(--text2);flex-shrink:0}
+  #log-list{overflow-y:auto;flex:1;padding:4px 10px}
+  #log-list::-webkit-scrollbar{width:3px}
+  #log-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .log-item{font-size:10px;color:var(--text2);padding:2px 0;border-bottom:1px solid rgba(48,54,61,0.2);font-family:'Noto Sans Tamil',sans-serif;line-height:1.4}
+  .log-ts{color:rgba(139,148,158,0.5);margin-right:4px;font-family:monospace}
+
+  /* CONTROLS */
+  #ctrl-hint{
+    position:absolute;top:60px;right:336px;
+    background:rgba(13,17,23,0.88);border:1px solid var(--border);border-radius:8px;
+    padding:8px 12px;font-size:11px;color:var(--text2);z-index:45;
+    backdrop-filter:blur(8px);line-height:1.9;
+  }
+  #ctrl-hint kbd{
+    background:var(--panel2);border:1px solid var(--border);border-radius:3px;
+    padding:1px 5px;font-size:10px;color:var(--text);font-family:monospace;
+  }
+
+  /* MINIMAP */
+  #minimap{
+    position:absolute;bottom:138px;left:8px;
+    width:96px;height:96px;border:1px solid var(--border);border-radius:6px;
+    overflow:hidden;z-index:42;background:var(--bg);
+    box-shadow:0 2px 12px rgba(0,0,0,0.5);
+  }
+  #mm-canvas{width:96px;height:96px;}
+
+  /* SPEECH BUBBLE */
+  .sbubble{
+    position:absolute;pointer-events:none;
+    background:rgba(22,27,34,0.97);border:1px solid var(--border);border-radius:8px;
+    padding:5px 9px;font-size:11px;color:var(--text);max-width:180px;line-height:1.4;z-index:35;
+    box-shadow:0 4px 16px rgba(0,0,0,0.6);font-family:'Noto Sans Tamil',sans-serif;
+    word-break:break-word;animation:bIn 0.2s ease;
+  }
+  @keyframes bIn{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+
+  /* ANNOUNCE BANNER */
+  #ann-banner{
+    position:absolute;top:60px;left:50%;transform:translateX(-50%);
+    background:rgba(255,152,0,0.12);border:1px solid rgba(255,152,0,0.4);
+    border-radius:8px;padding:8px 18px;font-size:13px;color:var(--announce);
+    z-index:60;font-family:'Noto Sans Tamil',sans-serif;
+    backdrop-filter:blur(8px);text-align:center;max-width:65%;display:none;
+  }
+
+  /* TOAST */
+  #toast{
+    position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+    background:var(--panel);border:1px solid var(--border);border-radius:8px;
+    padding:8px 16px;font-size:12px;color:var(--text);z-index:100;
+    display:none;font-family:'Noto Sans Tamil',sans-serif;white-space:nowrap;
+  }
+
+  /* PROXIMITY INDICATOR */
+  #prox-hint{
+    position:absolute;top:60px;left:50%;transform:translateX(-50%);
+    background:rgba(63,185,80,0.12);border:1px solid rgba(63,185,80,0.3);
+    border-radius:8px;padding:6px 14px;font-size:12px;color:var(--accent2);
+    z-index:45;display:none;font-family:'Noto Sans Tamil',sans-serif;
+    backdrop-filter:blur(8px);
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="topbar">
+    <div class="logo">🏙️ நகர் <span>AI Simulation</span></div>
+    <div id="sim-time">⏱ 00:00</div>
+    <div class="spacer"></div>
+    <div id="api-key-wrap">
+      <div class="status-dot" id="api-dot"></div>
+      <input id="api-key-input" type="password" placeholder="Gemini API Key (AIza...)"/>
+      <button class="btn-sm" onclick="saveKey()">Connect AI</button>
+    </div>
+  </div>
+
+  <canvas id="sim-canvas"></canvas>
+  <div id="minimap"><canvas id="mm-canvas"></canvas></div>
+
+  <div id="agents-panel">
+    <div id="agents-header">👥 Simulation Agents</div>
+    <div id="agent-list"></div>
+  </div>
+
+  <div id="log-panel">
+    <div id="log-header">📋 Activity Log</div>
+    <div id="log-list"></div>
+  </div>
+
+  <div id="ctrl-hint">
+    <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Move &nbsp;&nbsp;
+    <kbd>E</kbd> Talk nearby<br/>
+    <kbd>Space</kbd> Announce to all &nbsp;
+    <kbd>Click</kbd> Select agent
+  </div>
+
+  <div id="chat-panel">
+    <div id="chat-header">
+      <h3>💬 தகவல் தொடர்பு</h3>
+      <div id="chat-target-badge">All Agents 📢</div>
+    </div>
+    <div id="chat-log"></div>
+    <div id="input-area">
+      <div id="mode-tabs">
+        <div class="mode-tab active" id="tab-talk" onclick="setMode('talk')">🗣 Talk to Agent</div>
+        <div class="mode-tab atab" id="tab-ann" onclick="setMode('announce')">📢 Announce All</div>
+      </div>
+      <div id="msg-row">
+        <input id="msg-input" placeholder="Type in English or Tamil..." autocomplete="off"/>
+        <button id="send-btn" onclick="sendMsg()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ann-banner"></div>
+  <div id="prox-hint"></div>
+  <div id="toast"></div>
+</div>
+
+<script>
+// ============================================================
+// WORLD CONFIG
+// ============================================================
+const canvas = document.getElementById('sim-canvas');
+const ctx = canvas.getContext('2d');
+const mmCv = document.getElementById('mm-canvas');
+const mmCtx = mmCv.getContext('2d');
+
+const TILE = 48;
+const WW = 55; // world width tiles
+const WH = 38; // world height tiles
+
+let camera = {x:0,y:0};
+let keys = {};
+let simSec = 0;
+let frame = 0;
+let apiKey = localStorage.getItem('gkey')||'';
+let chatMode = 'talk';
+let selId = null;
+let logs = [];
+
+if(apiKey){document.getElementById('api-key-input').value=apiKey;setDot(true);}
+
+// ============================================================
+// WORLD MAP GENERATION
+// ============================================================
+// Tile types: 0=grass,1=road-H,2=road-V,3=intersection,4=building,5=sidewalk
+const world = [];
+for(let r=0;r<WH;r++){world[r]=[];for(let c=0;c<WW;c++)world[r][c]=0;}
+
+const hRoads=[5,13,21,29,35];
+const vRoads=[6,14,22,30,38,46];
+
+for(let r=0;r<WH;r++){
+  for(let c=0;c<WW;c++){
+    const isH=hRoads.includes(r), isV=vRoads.includes(c);
+    const sidH=hRoads.includes(r-1)||hRoads.includes(r+1);
+    const sidV=vRoads.includes(c-1)||vRoads.includes(c+1);
+    if(isH&&isV) world[r][c]=3;
+    else if(isH) world[r][c]=1;
+    else if(isV) world[r][c]=2;
+    else if(sidH||sidV) world[r][c]=5;
+  }
+}
+
+const BT=[
+  {name:'அலுவலகம்',col:'#1e3a5f',roof:'#2563eb',w:3,h:2},
+  {name:'வீடு',col:'#3b2f1e',roof:'#b45309',w:2,h:2},
+  {name:'கடை',col:'#1e3f2f',roof:'#059669',w:2,h:1},
+  {name:'பள்ளி',col:'#3b1e4f',roof:'#7c3aed',w:3,h:2},
+  {name:'மருத்துவமனை',col:'#1e3b3b',roof:'#0891b2',w:3,h:2},
+  {name:'வங்கி',col:'#3f3b1e',roof:'#d97706',w:2,h:2},
+  {name:'கோவில்',col:'#3b1e1e',roof:'#dc2626',w:2,h:2},
+  {name:'ஓட்டல்',col:'#1e3b1e',roof:'#16a34a',w:2,h:2},
+];
+
+const buildings=[];
+function rnd(n){return Math.floor(Math.random()*n);}
+for(let bi=0;bi<hRoads.length-1;bi++){
+  for(let bj=0;bj<vRoads.length-1;bj++){
+    const r1=hRoads[bi]+2,r2=hRoads[bi+1]-2;
+    const c1=vRoads[bj]+2,c2=vRoads[bj+1]-2;
+    if(r2-r1<1||c2-c1<1) continue;
+    const bt=BT[rnd(BT.length)];
+    const bw=Math.min(bt.w,c2-c1),bh=Math.min(bt.h,r2-r1);
+    const bc=c1+Math.floor((c2-c1-bw)/2);
+    const br=r1+Math.floor((r2-r1-bh)/2);
+    for(let rr=br;rr<br+bh;rr++) for(let cc=bc;cc<bc+bw;cc++) world[rr][cc]=4;
+    buildings.push({r:br,c:bc,w:bw,h:bh,...bt});
+  }
+}
+
+const trees=[];
+for(let i=0;i<100;i++){
+  const r=rnd(WH),c=rnd(WW);
+  if(world[r][c]===0) trees.push({r,c,s:0.5+Math.random()*0.5,hue:rnd(40)});
+}
+
+// ============================================================
+// AGENTS
+// ============================================================
+const AGENTS_DEF=[
+  {id:'a1',name:'அர்ஜுன்',role:'மென்பொருள் பொறியாளர்',prof:'Software Engineer',col:'#3b82f6',em:'👨‍💻',sx:9,sy:7,
+   persona:'நான் அர்ஜுன், ஒரு மென்பொருள் பொறியாளர். தொழில்நுட்பம் மற்றும் புதுமை என்னை உந்துகின்றன. கணினி அறிவியலில் ஆழமான ஆர்வம் உள்ளது.'},
+  {id:'a2',name:'பிரியா',role:'மருத்துவர்',prof:'Doctor',col:'#ec4899',em:'👩‍⚕️',sx:16,sy:7,
+   persona:'நான் பிரியா, ஒரு மருத்துவர். மக்களின் உடல் நலனில் அக்கறை கொள்கிறேன். நோயாளிகளுக்கு சேவை செய்வதே என் வாழ்க்கை நோக்கம்.'},
+  {id:'a3',name:'கார்த்திக்',role:'ஆசிரியர்',prof:'Teacher',col:'#f59e0b',em:'👨‍🏫',sx:24,sy:7,
+   persona:'நான் கார்த்திக், ஒரு ஆசிரியர். குழந்தைகளுக்கு கல்வி கற்பிப்பதில் மகிழ்ச்சி அடைகிறேன். அறிவுக்கு எல்லை இல்லை என்று நம்புகிறேன்.'},
+  {id:'a4',name:'லட்சுமி',role:'வணிகர்',prof:'Business Owner',col:'#10b981',em:'👩‍💼',sx:32,sy:7,
+   persona:'நான் லட்சுமி, ஒரு வணிகர். என் சொந்த கடை வைத்திருக்கிறேன். நுகர்வோர் திருப்தியே என் முதல் இலக்கு.'},
+  {id:'a5',name:'ராஜேஷ்',role:'போலீஸ் அதிகாரி',prof:'Police Officer',col:'#6366f1',em:'👮',sx:9,sy:18,
+   persona:'நான் ராஜேஷ், ஒரு போலீஸ் அதிகாரி. நகரின் பாதுகாப்பு என் கடமை. நியாயம் மற்றும் ஒழுக்கம் என் தாரக மந்திரம்.'},
+  {id:'a6',name:'சுமா',role:'சமையல்காரர்',prof:'Chef',col:'#f97316',em:'👩‍🍳',sx:18,sy:18,
+   persona:'நான் சுமா, ஒரு சமையல்காரர். தமிழ் உணவின் சுவையை உலகிற்கு காட்டுவது என் கனவு. சமையல் என் கலை.'},
+  {id:'a7',name:'வேலு',role:'விவசாயி',prof:'Farmer',col:'#84cc16',em:'👨‍🌾',sx:28,sy:18,
+   persona:'நான் வேலு, ஒரு விவசாயி. நிலத்தை நேசிக்கிறேன். விளைச்சல் நல்லதாக இருக்கும் போது மனதில் ஆனந்தம் பிறக்கிறது.'},
+  {id:'a8',name:'மீனா',role:'கலைஞர்',prof:'Artist',col:'#a855f7',em:'👩‍🎨',sx:38,sy:18,
+   persona:'நான் மீனா, ஒரு கலைஞர். வண்ணங்கள் மற்றும் ஓவியங்கள் என் உலகம். படைப்பாற்றல் என் சுவாசம்.'},
+];
+
+let agents=AGENTS_DEF.map(d=>({
+  ...d,
+  px:d.sx*TILE+TILE/2, py:d.sy*TILE+TILE/2,
+  state:'wander', stTmr:Math.random()*300+100,
+  movTgt:null, lastMsg:'', msgTmr:0, busy:false,
+  thoughtTmr:Math.random()*200+100,
+}));
+
+const player={
+  px:12*TILE+TILE/2, py:9*TILE+TILE/2,
+  speed:170, facing:'down',
+};
+
+// ============================================================
+// RESIZE
+// ============================================================
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  mmCv.width=96; mmCv.height=96;
+}
+resize();
+window.addEventListener('resize',resize);
+
+// ============================================================
+// INPUT
+// ============================================================
+window.addEventListener('keydown',e=>{
+  keys[e.key.toLowerCase()]=true;
+  if(e.key===' '){e.preventDefault();setMode('announce');document.getElementById('msg-input').focus();}
+  if(e.key.toLowerCase()==='e') talkNearby();
+  if(e.key==='Escape') clearSel();
+});
+window.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
+document.getElementById('msg-input').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){e.preventDefault();sendMsg();}
+});
+
+canvas.addEventListener('click',e=>{
+  const wx=e.clientX+camera.x, wy=e.clientY+camera.y;
+  let best=null,bd=36;
+  for(const a of agents){
+    const d=Math.hypot(a.px-wx,a.py-wy);
+    if(d<bd){bd=d;best=a;}
+  }
+  if(best){selAgent(best.id);showToast(`${best.em} ${best.name} selected — Talk now!`);}
+  else clearSel();
+});
+
+// ============================================================
+// SELECTION
+// ============================================================
+function selAgent(id){
+  selId=id;
+  setMode('talk');
+  document.querySelectorAll('.agent-item').forEach(el=>el.classList.remove('selected'));
+  const el=document.querySelector(`.agent-item[data-id="${id}"]`);
+  if(el) el.classList.add('selected');
+  const a=agents.find(x=>x.id===id);
+  if(a) document.getElementById('chat-target-badge').textContent=`${a.em} ${a.name}`;
+}
+function clearSel(){
+  selId=null;
+  document.querySelectorAll('.agent-item').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('chat-target-badge').textContent='All Agents 📢';
+}
+function setMode(m){
+  chatMode=m;
+  document.getElementById('tab-talk').classList.toggle('active',m==='talk');
+  document.getElementById('tab-ann').classList.toggle('active',m==='announce');
+  const btn=document.getElementById('send-btn');
+  const inp=document.getElementById('msg-input');
+  if(m==='announce'){
+    btn.className='ann';btn.textContent='Announce';
+    inp.placeholder='அறிவிப்பு செய்திடவும்... (Any language)';
+    clearSel();
+  } else {
+    btn.className='';btn.textContent='Send';
+    inp.placeholder='Type in English or Tamil...';
+  }
+}
+
+// ============================================================
+// AI — Gemini API
+// ============================================================
+async function callGemini(system,user){
+  if(!apiKey) return null;
+  try{
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system_instruction:{parts:[{text:system}]},
+        contents:[{parts:[{text:user}]}],
+        generationConfig:{temperature:0.88,maxOutputTokens:180,topP:0.95}
+      })
+    });
+    const d=await r.json();
+    if(d.error){console.error(d.error);return '[Error: '+d.error.message+']';}
+    return d.candidates?.[0]?.content?.parts?.[0]?.text||null;
+  }catch(e){return null;}
+}
+
+function agentSystem(a,isAnn=false){
+  return `நீ "${a.name}" என்பவர், ஒரு AI-powered தமிழ் நகர் simulation-ல் வாழும் ஒரு பாத்திரம்.
+உன் தொழில்: ${a.prof} (${a.role})
+உன் ஆளுமை மற்றும் பின்னணி: ${a.persona}
+
+கட்டாய விதிகள்:
+1. எப்போதும் தமிழிலேயே பதில் சொல் - ஒரு வார்த்தை கூட ஆங்கிலத்தில் கூடாது.
+2. உன் பாத்திரத்திற்கு ஏற்ப இயற்கையாக, உணர்வோடு பேசு.
+3. 2-3 வாக்கியங்களில் சுருக்கமாக பதில் சொல்.
+4. "YOU" அல்லது "கட்டுப்பாட்டு அதிகாரி" என்பவர் இந்த நகரின் தலைமை agent.
+5. நீ ஒரு simulation நகரத்தில் உண்மையான பாத்திரமாக நடி.
+6. உன் பெயர் மற்றும் தொழிலை வெளிப்படுத்தி பேசு.
+${isAnn?'7. இது நகர் தலைமை அதிகாரியின் பொது அறிவிப்பு. அதற்கு ஏற்ப கவனமாக கேட்டு பதில் சொல்.':''}`;
+}
+
+// ============================================================
+// SEND MESSAGE
+// ============================================================
+async function sendMsg(){
+  const inp=document.getElementById('msg-input');
+  const msg=inp.value.trim();
+  if(!msg) return;
+  inp.value='';
+  if(!apiKey){showToast('⚠️ Enter Gemini API key first!');return;}
+  if(chatMode==='announce') await doAnnounce(msg);
+  else{
+    if(!selId){showToast('👆 Click an agent or press E to select one first');return;}
+    const a=agents.find(x=>x.id===selId);
+    if(a) await doTalk(a,msg);
+  }
+}
+
+async function doTalk(a,msg){
+  addChat('player','🧑 நீங்கள்',msg,'player');
+  addLog(`You → ${a.name}: ${msg}`);
+  const tid=addChat('npc',`${a.em} ${a.name}`,'<span class="thinking">சிந்திக்கிறேன்...</span>','npc',true);
+  a.busy=true;
+  const reply=await callGemini(agentSystem(a,false),`கட்டுப்பாட்டு அதிகாரி உனக்கு சொல்கிறார்: "${msg}"\nதமிழில் பதில் சொல்.`);
+  const fr=reply||'மன்னிக்கவும், இப்போது பேச முடியவில்லை.';
+  updateChat(tid,fr);
+  a.lastMsg=fr;a.msgTmr=260;a.busy=false;a.state='idle';a.stTmr=180;
+  addLog(`${a.name}: ${fr.substring(0,45)}...`);
+}
+
+async function doAnnounce(msg){
+  showAnnBanner(`📢 ${msg}`);
+  addChat('announce','📢 அறிவிப்பு',msg,'announce');
+  addLog(`Announcement: ${msg}`);
+  const shuffled=[...agents].sort(()=>Math.random()-0.5);
+  for(const a of shuffled){
+    const delay=700+Math.random()*1800;
+    setTimeout(async()=>{
+      a.busy=true;
+      const p=`நகரின் கட்டுப்பாட்டு அதிகாரி இந்த பொது அறிவிப்பை வெளியிட்டார்: "${msg}"\nஒரு ${a.role} என்று நீ இதற்கு என்ன சொல்வாய்? தமிழில் பதில் சொல்.`;
+      const reply=await callGemini(agentSystem(a,true),p);
+      const fr=reply||`புரிந்தது! நன்றி.`;
+      addChat('npc',`${a.em} ${a.name}`,fr,'npc');
+      a.lastMsg=fr;a.msgTmr=230;a.busy=false;a.state='idle';a.stTmr=200;
+      addLog(`${a.name}: ${fr.substring(0,40)}...`);
+    },delay);
+  }
+}
+
+function talkNearby(){
+  let best=null,bd=90;
+  for(const a of agents){
+    const d=Math.hypot(a.px-player.px,a.py-player.py);
+    if(d<bd){bd=d;best=a;}
+  }
+  if(best){selAgent(best.id);document.getElementById('msg-input').focus();showToast(`${best.em} ${best.name} — ready to talk!`);}
+  else showToast('Walk closer to an agent first!');
+}
+
+// ============================================================
+// CHAT UI
+// ============================================================
+let mid=0;
+function addChat(type,sender,html,cls,raw=false){
+  const log=document.getElementById('chat-log');
+  const id=`m${++mid}`;
+  const div=document.createElement('div');
+  div.className=`chat-msg ${cls}`;div.id=id;
+  const sc=type==='player'?'you':type==='announce'?'ann':'';
+  const body=raw?html:esc(html);
+  div.innerHTML=`<div class="msg-sender ${sc}">${sender}</div><div class="mbody">${body}</div>`;
+  log.appendChild(div);
+  log.scrollTop=log.scrollHeight;
+  return id;
+}
+function updateChat(id,text){
+  const el=document.getElementById(id);
+  if(el){const b=el.querySelector('.mbody');if(b)b.textContent=text;}
+}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ============================================================
+// LOG
+// ============================================================
+function addLog(msg){
+  const ts=fmtT(simSec);
+  logs.unshift({ts,msg});
+  if(logs.length>60)logs.pop();
+  renderLogs();
+}
+function renderLogs(){
+  document.getElementById('log-list').innerHTML=
+    logs.slice(0,14).map(l=>`<div class="log-item"><span class="log-ts">${l.ts}</span>${esc(l.msg.substring(0,55))}</div>`).join('');
+}
+function fmtT(s){
+  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+}
+
+// ============================================================
+// AGENT LIST UI
+// ============================================================
+function renderAgentList(){
+  document.getElementById('agent-list').innerHTML=agents.map(a=>`
+    <div class="agent-item" data-id="${a.id}" onclick="selAgent('${a.id}')">
+      <div class="agent-avatar" style="background:${a.col}22;border:1px solid ${a.col}55">${a.em}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="agent-name">${a.name}</div>
+        <div class="agent-role">${a.role}</div>
+      </div>
+      <div class="agent-sdot" id="sd-${a.id}"></div>
+    </div>`).join('');
+}
+renderAgentList();
+
+// ============================================================
+// PROXIMITY HINT
+// ============================================================
+function checkProximity(){
+  let near=null,nd=90;
+  for(const a of agents){
+    const d=Math.hypot(a.px-player.px,a.py-player.py);
+    if(d<nd){nd=d;near=a;}
+  }
+  const ph=document.getElementById('prox-hint');
+  if(near&&nd<80){
+    ph.style.display='block';
+    ph.textContent=`${near.em} ${near.name} அருகில் உள்ளார் — E அழுத்துக`;
+  } else ph.style.display='none';
+}
+
+// ============================================================
+// MAIN LOOP
+// ============================================================
+let lastTs=performance.now();
+function gameLoop(ts){
+  const dt=Math.min((ts-lastTs)/1000,0.05);
+  lastTs=ts;
+  update(dt);
+  render();
+  requestAnimationFrame(gameLoop);
+}
+
+function update(dt){
+  simSec+=dt;frame++;
+  
+  // Player movement
+  let dx=0,dy=0;
+  if(keys['w']||keys['arrowup']) dy=-1;
+  if(keys['s']||keys['arrowdown']) dy=1;
+  if(keys['a']||keys['arrowleft']) dx=-1;
+  if(keys['d']||keys['arrowright']) dx=1;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  
+  const nx=player.px+dx*player.speed*dt;
+  const ny=player.py+dy*player.speed*dt;
+  const tc=Math.floor(nx/TILE),tr=Math.floor(ny/TILE);
+  if(tr>=0&&tr<WH&&tc>=0&&tc<WW&&world[tr][tc]!==4){
+    player.px=nx;player.py=ny;
+  }
+  player.px=Math.max(TILE/2,Math.min((WW-0.5)*TILE,player.px));
+  player.py=Math.max(TILE/2,Math.min((WH-0.5)*TILE,player.py));
+  if(dx<0) player.facing='left';
+  else if(dx>0) player.facing='right';
+  else if(dy<0) player.facing='up';
+  else if(dy>0) player.facing='down';
+  
+  // Camera
+  camera.x=Math.max(0,Math.min(WW*TILE-canvas.width,player.px-canvas.width/2));
+  camera.y=Math.max(0,Math.min(WH*TILE-canvas.height,player.py-canvas.height/2));
+  
+  // Agent AI movement
+  for(const a of agents){
+    a.stTmr-=dt*60;
+    if(a.msgTmr>0) a.msgTmr-=dt*60;
+    
+    if(a.state==='wander'&&!a.busy){
+      if(!a.movTgt||Math.hypot(a.px-a.movTgt.x,a.py-a.movTgt.y)<10){
+        let tries=0;
+        while(tries++<30){
+          const tr2=rnd(WH),tc2=rnd(WW);
+          const t=world[tr2][tc2];
+          if(t===1||t===2||t===5){
+            a.movTgt={x:tc2*TILE+TILE/2,y:tr2*TILE+TILE/2};break;
+          }
+        }
+      }
+      if(a.movTgt){
+        const ddx=a.movTgt.x-a.px,ddy=a.movTgt.y-a.py;
+        const dist=Math.hypot(ddx,ddy);
+        if(dist>6){const spd=38;a.px+=ddx/dist*spd*dt;a.py+=ddy/dist*spd*dt;}
+      }
+    }
+    if(a.stTmr<=0&&!a.busy){
+      a.state=Math.random()<0.3?'idle':'wander';
+      a.stTmr=200+Math.random()*400;
+    }
+    
+    // Update status dot
+    const sd=document.getElementById(`sd-${a.id}`);
+    if(sd) sd.style.background=a.busy?'#f59e0b':a.state==='wander'?'#3fb950':'#58a6ff';
+  }
+  
+  if(frame%60===0){
+    document.getElementById('sim-time').textContent=`⏱ ${fmtT(simSec)}`;
+    checkProximity();
+  }
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+const gVars=['#1a2d1a','#192b19','#1c2f1c','#1b2e1b'];
+function render(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.save();ctx.translate(-camera.x,-camera.y);
+  drawWorld();drawTrees();drawBuildings();drawAgents();drawPlayer();
+  ctx.restore();
+  drawMinimap();
+  drawBubbles();
+}
+
+function drawWorld(){
+  const sc=Math.max(0,Math.floor(camera.x/TILE));
+  const ec=Math.min(WW,Math.ceil((camera.x+canvas.width)/TILE)+1);
+  const sr=Math.max(0,Math.floor(camera.y/TILE));
+  const er=Math.min(WH,Math.ceil((camera.y+canvas.height)/TILE)+1);
+  for(let r=sr;r<er;r++){
+    for(let c=sc;c<ec;c++){
+      const t=world[r][c],x=c*TILE,y=r*TILE;
+      if(t===0){
+        ctx.fillStyle=gVars[(r*3+c*7)%4];ctx.fillRect(x,y,TILE,TILE);
+      } else if(t===1||t===2){
+        ctx.fillStyle='#1e2329';ctx.fillRect(x,y,TILE,TILE);
+        ctx.fillStyle='rgba(255,255,255,0.055)';
+        if(t===1) ctx.fillRect(x,y+TILE/2-1,TILE,2);
+        else ctx.fillRect(x+TILE/2-1,y,2,TILE);
+        ctx.strokeStyle='rgba(255,200,50,0.1)';ctx.lineWidth=0.5;ctx.strokeRect(x,y,TILE,TILE);
+      } else if(t===3){
+        ctx.fillStyle='#252d38';ctx.fillRect(x,y,TILE,TILE);
+        // crosswalk marks
+        ctx.fillStyle='rgba(255,255,255,0.06)';
+        for(let i=0;i<3;i++) ctx.fillRect(x+6+i*14,y+4,6,4);
+        for(let i=0;i<3;i++) ctx.fillRect(x+4,y+6+i*14,4,6);
+      } else if(t===5){
+        ctx.fillStyle='#1a2234';ctx.fillRect(x,y,TILE,TILE);
+        ctx.fillStyle='rgba(255,255,255,0.018)';
+        for(let i=0;i<3;i++) for(let j=0;j<3;j++){
+          if((i+j)%2===0) ctx.fillRect(x+i*16,y+j*16,16,16);
+        }
+      } else if(t===4){
+        ctx.fillStyle='#0d1117';ctx.fillRect(x,y,TILE,TILE);
+      }
+    }
+  }
+}
+
+function drawBuildings(){
+  for(const b of buildings){
+    const x=b.c*TILE,y=b.r*TILE,w=b.w*TILE,h=b.h*TILE;
+    if(x+w<camera.x||x>camera.x+canvas.width) continue;
+    if(y+h<camera.y||y>camera.y+canvas.height) continue;
+    ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(x+5,y+5,w,h);
+    ctx.fillStyle=b.col;ctx.fillRect(x,y,w,h);
+    ctx.fillStyle=b.roof;ctx.fillRect(x,y,w,7);
+    // windows
+    ctx.fillStyle='rgba(255,255,200,0.12)';
+    for(let wr=0;wr<b.h;wr++) for(let wc=0;wc<b.w;wc++){
+      ctx.fillRect(x+10+wc*(TILE-14),y+14+wr*(TILE-20),TILE-22,TILE-28);
+    }
+    ctx.strokeStyle=b.roof+'55';ctx.lineWidth=1.5;ctx.strokeRect(x,y,w,h);
+    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='bold 9px Inter';ctx.textAlign='center';
+    ctx.fillText(b.name.substring(0,5),x+w/2,y+h/2+3);
+  }
+}
+
+function drawTrees(){
+  for(const t of trees){
+    const x=t.c*TILE+TILE/2,y=t.r*TILE+TILE/2;
+    if(x<camera.x-30||x>camera.x+canvas.width+30||y<camera.y-30||y>camera.y+canvas.height+30) continue;
+    ctx.fillStyle='#5c3d1e';ctx.fillRect(x-2,y+3,4,7);
+    ctx.fillStyle=`hsl(${135+t.hue},60%,22%)`;
+    ctx.beginPath();ctx.arc(x,y-2,t.s*11,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=`hsl(${130+t.hue},65%,26%)`;
+    ctx.beginPath();ctx.arc(x-4,y-5,t.s*8,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=`hsl(${140+t.hue},60%,24%)`;
+    ctx.beginPath();ctx.arc(x+4,y-4,t.s*7,0,Math.PI*2);ctx.fill();
+  }
+}
+
+function drawAgents(){
+  for(const a of agents){
+    const sx=a.px-camera.x,sy=a.py-camera.y;
+    if(sx<-50||sx>canvas.width+50||sy<-50||sy>canvas.height+50) continue;
+    const isSel=a.id===selId,R=14;
+    if(isSel){
+      ctx.beginPath();ctx.arc(sx,sy,R+7,0,Math.PI*2);
+      ctx.fillStyle='rgba(88,166,255,0.12)';ctx.fill();
+      ctx.strokeStyle='rgba(88,166,255,0.55)';ctx.lineWidth=1.5;ctx.stroke();
+    }
+    // Shadow
+    ctx.beginPath();ctx.ellipse(sx,sy+R+2,R*0.65,4,0,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,0,0,0.28)';ctx.fill();
+    // Body
+    const g=ctx.createRadialGradient(sx-4,sy-4,2,sx,sy,R);
+    g.addColorStop(0,lighten(a.col,0.35));g.addColorStop(1,a.col);
+    ctx.beginPath();ctx.arc(sx,sy,R,0,Math.PI*2);
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.18)';ctx.lineWidth=1;ctx.stroke();
+    ctx.font=`${R}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(a.em,sx,sy);
+    // Name
+    ctx.font='bold 9px Noto Sans Tamil,sans-serif';ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(sx-26,sy-R-20,52,14);
+    ctx.fillStyle=isSel?'#58a6ff':'#e6edf3';
+    ctx.fillText(a.name,sx,sy-R-12);
+    if(a.busy){ctx.font='10px serif';ctx.fillText('💭',sx+R,sy-R);}
+  }
+}
+
+function drawPlayer(){
+  const sx=player.px-camera.x,sy=player.py-camera.y,R=15;
+  // Glow
+  const gg=ctx.createRadialGradient(sx,sy,R,sx,sy,R+10);
+  gg.addColorStop(0,'rgba(0,229,255,0.22)');gg.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(sx,sy,R+10,0,Math.PI*2);ctx.fillStyle=gg;ctx.fill();
+  // Shadow
+  ctx.beginPath();ctx.ellipse(sx,sy+R+2,R*0.65,4,0,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,229,255,0.18)';ctx.fill();
+  // Body
+  const pg=ctx.createRadialGradient(sx-5,sy-5,3,sx,sy,R);
+  pg.addColorStop(0,'#7fffff');pg.addColorStop(1,'#00b0c8');
+  ctx.beginPath();ctx.arc(sx,sy,R,0,Math.PI*2);
+  ctx.fillStyle=pg;ctx.fill();
+  ctx.strokeStyle='rgba(0,229,255,0.8)';ctx.lineWidth=2;ctx.stroke();
+  ctx.font=`${R}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('🧑',sx,sy);
+  // Label
+  ctx.fillStyle='rgba(0,0,0,0.82)';ctx.fillRect(sx-24,sy-R-21,48,15);
+  ctx.strokeStyle='rgba(0,229,255,0.4)';ctx.lineWidth=1;ctx.strokeRect(sx-24,sy-R-21,48,15);
+  ctx.font='bold 10px Inter';ctx.textAlign='center';ctx.textBaseline='alphabetic';
+  ctx.fillStyle='#00e5ff';ctx.fillText('YOU',sx,sy-R-12);
+}
+
+function drawMinimap(){
+  const sx=96/(WW*TILE),sy=96/(WH*TILE);
+  mmCtx.fillStyle='#0d1117';mmCtx.fillRect(0,0,96,96);
+  for(let r=0;r<WH;r++) for(let c=0;c<WW;c++){
+    const t=world[r][c];
+    if(t===1||t===2||t===3){mmCtx.fillStyle='#252d38';mmCtx.fillRect(c*TILE*sx,r*TILE*sy,TILE*sx+0.5,TILE*sy+0.5);}
+    else if(t===4){mmCtx.fillStyle='#1e3a5f';mmCtx.fillRect(c*TILE*sx,r*TILE*sy,TILE*sx+0.5,TILE*sy+0.5);}
+  }
+  for(const a of agents){
+    mmCtx.fillStyle=a.id===selId?'#58a6ff':a.col;
+    mmCtx.fillRect(a.px*sx-2,a.py*sy-2,4,4);
+  }
+  mmCtx.fillStyle='#00e5ff';
+  mmCtx.beginPath();mmCtx.arc(player.px*sx,player.py*sy,3,0,Math.PI*2);mmCtx.fill();
+  mmCtx.strokeStyle='rgba(255,255,255,0.25)';mmCtx.lineWidth=1;
+  mmCtx.strokeRect(camera.x*sx,camera.y*sy,canvas.width*sx,canvas.height*sy);
+}
+
+function drawBubbles(){
+  document.querySelectorAll('.sbubble').forEach(el=>el.remove());
+  for(const a of agents){
+    if(a.msgTmr<=0||!a.lastMsg) continue;
+    const sx=a.px-camera.x,sy=a.py-camera.y;
+    if(sx<-20||sx>canvas.width+20||sy<-20||sy>canvas.height+20) continue;
+    const d=document.createElement('div');
+    d.className='sbubble';
+    d.style.cssText=`left:${sx+18}px;top:${sy-76}px;`;
+    d.textContent=a.lastMsg.length>90?a.lastMsg.substring(0,90)+'…':a.lastMsg;
+    document.getElementById('app').appendChild(d);
+  }
+}
+
+function lighten(hex,amt){
+  const n=parseInt(hex.replace('#',''),16);
+  const r=Math.min(255,((n>>16)&255)+Math.round(255*amt));
+  const g=Math.min(255,((n>>8)&255)+Math.round(255*amt));
+  const b=Math.min(255,((n)&255)+Math.round(255*amt));
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
+// ============================================================
+// ANNOUNCE BANNER
+// ============================================================
+function showAnnBanner(msg){
+  const b=document.getElementById('ann-banner');
+  b.textContent=msg;b.style.display='block';
+  clearTimeout(window._abt);
+  window._abt=setTimeout(()=>{b.style.display='none';},5000);
+}
+
+// ============================================================
+// TOAST / API KEY
+// ============================================================
+function showToast(msg,dur=2500){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>{t.style.display='none';},dur);
+}
+function setDot(ok){
+  document.getElementById('api-dot').className='status-dot '+(ok?'green':'red');
+}
+function saveKey(){
+  const k=document.getElementById('api-key-input').value.trim();
+  if(!k){showToast('⚠️ Please enter your Gemini API key');return;}
+  apiKey=k;localStorage.setItem('gkey',k);
+  setDot(true);
+  showToast('✅ Connected! Agents ready to talk in Tamil.');
+  addChat('system','🟢 System','API இணைப்பு வெற்றி! Agent-களிடம் தமிழில் பேசலாம். ஒரு agent-ஐ click செய்து பேசுங்கள்.','system');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+addChat('system','🏙️ System','நகர் Simulation தொடங்கியது! Gemini API key உள்ளிட்டு agents-இடம் பேசுங்கள்.','system');
+addChat('system','💡 Tip','WASD = நகர்தல் | E = அருகில் பேசு | Space = அறிவிப்பு | Click = Agent தேர்வு','system');
+addLog('Simulation initialized');
+addLog('8 AI agents spawned');
+
+requestAnimationFrame(gameLoop);
+</script>
+</body>
+</html>
